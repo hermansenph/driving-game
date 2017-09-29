@@ -25,9 +25,11 @@ class Car {
   }
   start() {
     this.stop()
-    const position = this.position
+    let position = this.position
+    let direction = this.direction
+    console.log(direction)
     const player = document.querySelector('#' + this.player)
-    if (this.direction === 0) {
+    if (direction === 0) {
       this.interval = setInterval(function () {
         position[0] += 5
         Object.assign(player.style, {
@@ -35,7 +37,7 @@ class Car {
         })
       }, 16)
     }
-    if (this.direction === 180) {
+    else if (direction === 180) {
       this.interval = setInterval(function () {
         position[0] -= 5
         Object.assign(player.style, {
@@ -43,25 +45,85 @@ class Car {
         })
       }, 16)
     }
-    if (this.direction === 270) {
+    else if (direction === 270) {
       this.interval = setInterval(function () {
-        position[0] += 5
+        position[1] -= 5
         Object.assign(player.style, {
-          left: position[1] + 'px'
+          top: position[1] + 'px'
         })
       }, 16)
     }
-    if (this.direction === 90) {
+    else if (direction === 90) {
       this.interval = setInterval(function () {
-        position[0] -= 5
+        position[1] += 5
         Object.assign(player.style, {
-          left: position[1] + 'px'
+          top: position[1] + 'px'
         })
       }, 16)
     }
   }
   stop() {
     clearInterval(this.interval)
+  }
+  turnLeft() {
+    const $player = document.querySelector('#' + this.player)
+    const player = this
+    if (player.direction === 0) {
+      player.direction = 270
+      Object.assign($player.style, {
+        transform: 'rotate(270deg)'
+      })
+    }
+    else if (player.direction === 270) {
+      player.direction = 180
+      Object.assign($player.style, {
+        transform: 'rotate(180deg)'
+      })
+    }
+    else if (player.direction === 180) {
+      player.direction = 90
+      Object.assign($player.style, {
+        transform: 'rotate(90deg)'
+      })
+    }
+    else if (player.direction === 90) {
+      player.direction = 0
+      Object.assign($player.style, {
+        transform: 'rotate(0deg)'
+      })
+    }
+    this.stop()
+    this.start()
+  }
+  turnRight() {
+    const $player = document.querySelector('#' + this.player)
+    const player = this
+    if (player.direction === 0) {
+      player.direction = 90
+      Object.assign($player.style, {
+        transform: 'rotate(90deg)'
+      })
+    }
+    else if (player.direction === 90) {
+      player.direction = 180
+      Object.assign($player.style, {
+        transform: 'rotate(180deg)'
+      })
+    }
+    else if (player.direction === 180) {
+      player.direction = 270
+      Object.assign($player.style, {
+        transform: 'rotate(270deg)'
+      })
+    }
+    else if (player.direction === 270) {
+      player.direction = 0
+      Object.assign($player.style, {
+        transform: 'rotate(0deg)'
+      })
+    }
+    this.stop()
+    this.start()
   }
 }
 
@@ -90,6 +152,30 @@ addEventListener('keypress', function (e) {
 addEventListener('keypress', function (e) {
   if (e.keyCode === 107) {
     player2.stop()
+  }
+})
+
+addEventListener('keypress', function (e) {
+  if (e.keyCode === 97) {
+    player1.turnLeft()
+  }
+})
+
+addEventListener('keypress', function (e) {
+  if (e.keyCode === 100) {
+    player1.turnRight()
+  }
+})
+
+addEventListener('keypress', function (e) {
+  if (e.keyCode === 106) {
+    player2.turnLeft()
+  }
+})
+
+addEventListener('keypress', function (e) {
+  if (e.keyCode === 108) {
+    player2.turnLeft()
   }
 })
 addEventListener('keypress', function (e) {
