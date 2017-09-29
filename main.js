@@ -3,6 +3,7 @@ class Car {
     this.image = image
     this.position = position
     this.player = player
+    this.interval = undefined
   }
   display() {
     const $img = document.createElement('img')
@@ -23,10 +24,11 @@ class Car {
     document.querySelector('#zone').appendChild($img)
   }
   start() {
+    this.stop()
     const position = this.position
     const player = document.querySelector('#' + this.player)
     if (this.direction === 0) {
-      setInterval(function () {
+      this.interval = setInterval(function () {
         position[0] += 5
         Object.assign(player.style, {
           left: position[0] + 'px'
@@ -34,7 +36,7 @@ class Car {
       }, 16)
     }
     if (this.direction === 180) {
-      setInterval(function () {
+      this.interval = setInterval(function () {
         position[0] -= 5
         Object.assign(player.style, {
           left: position[0] + 'px'
@@ -42,7 +44,7 @@ class Car {
       }, 16)
     }
     if (this.direction === 270) {
-      setInterval(function () {
+      this.interval = setInterval(function () {
         position[0] += 5
         Object.assign(player.style, {
           left: position[1] + 'px'
@@ -50,13 +52,16 @@ class Car {
       }, 16)
     }
     if (this.direction === 90) {
-      setInterval(function () {
+      this.interval = setInterval(function () {
         position[0] -= 5
         Object.assign(player.style, {
           left: position[1] + 'px'
         })
       }, 16)
     }
+  }
+  stop() {
+    clearInterval(this.interval)
   }
 }
 
@@ -74,4 +79,19 @@ addEventListener('keypress', function (e) {
   if (e.keyCode === 105) {
     player2.start()
   }
+})
+
+addEventListener('keypress', function (e) {
+  if (e.keyCode === 115) {
+    player1.stop()
+  }
+})
+
+addEventListener('keypress', function (e) {
+  if (e.keyCode === 107) {
+    player2.stop()
+  }
+})
+addEventListener('keypress', function (e) {
+  console.log(e.keyCode)
 })
