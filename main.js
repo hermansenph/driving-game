@@ -27,7 +27,6 @@ class Car {
     this.stop()
     let position = this.position
     let direction = this.direction
-    console.log(direction)
     const player = document.querySelector('#' + this.player)
     if (direction === 0) {
       this.interval = setInterval(function () {
@@ -175,7 +174,7 @@ addEventListener('keypress', function (e) {
 
 addEventListener('keypress', function (e) {
   if (e.keyCode === 108) {
-    player2.turnLeft()
+    player2.turnRight()
   }
 })
 addEventListener('keypress', function (e) {
